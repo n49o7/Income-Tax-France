@@ -11,7 +11,7 @@
   </head>
   <body>
     <div class="container">
-      <h2>Barême</h2>
+      <h3>Barême</h3>
       <table>
         <thead>
           <tr>
@@ -22,42 +22,42 @@
         </thead>
         <tbody>
           <tr>
-            <td><input value="0"/></td>
-            <td><input value="10064"/></td>
-            <td><input value="0"/></td>
+            <td>0</td>
+            <td>10064</td>
+            <td>0%</td>
           </tr>
           <tr>
-            <td><input value="10064"/></td>
-            <td><input value="25659"/></td>
-            <td><input value="11"/></td>
+            <td>10064</td>
+            <td>25659</td>
+            <td>11%</td>
           </tr>
           <tr>
-            <td><input value="25659"/></td>
-            <td><input value="73369"/></td>
-            <td><input value="30"/></td>
+            <td>25659</td>
+            <td>73369</td>
+            <td>30%</td>
           </tr>
           <tr>
-            <td><input value="73369"/></td>
-            <td><input value="157806"/></td>
-            <td><input value="41"/></td>
+            <td>73369</td>
+            <td>157806</td>
+            <td>41%</td>
           </tr>
           <tr>
-            <td><input value="157806"/></td>
-            <td><input value="999999999"/></td>
-            <td><input value="45"/></td>
+            <td>157806</td>
+            <td>999999999</td>
+            <td>45%</td>
           </tr>
         </tbody>
       </table>
-      <input id="somme"/>
-      <div id="resultat"></div>
+      <input id="sum"/>
+      <div id="result" class="u-full-width" onchange="update()"></div>
     </div>
   </body>
   <script>
-    document.querySelectorAll('input').addEventListener('onchange', function(this) {
-      console.log(this)
-      //let s = this.value
-      //let r = imposition(s)
-      //console.log(r)
+    let input = document.querySelectorAll('#sum')
+    let update = function() {
+      let s = +input.value
+      let r = imposition(s)
+      console.log(r)
     })
   </script>
 </html>
