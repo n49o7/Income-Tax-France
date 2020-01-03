@@ -8,9 +8,9 @@ let brackets = [
 
 let tax = function(sum) {
   let result = []
-	brackets.forEach( e => {
+  brackets.forEach( e => {
     let part = intersect(sum, e)
-	  let tax = part * e[2] / 100
+    let tax = part * e[2] / 100
     result.push([
       brackets.indexOf(e),
       part,
