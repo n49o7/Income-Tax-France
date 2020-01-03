@@ -9,56 +9,79 @@
     crossorigin="anonymous" />
     <script src="script.js"></script>
   </head>
+  <style>
+    body {
+      display: flex;
+      justify-content: center
+    }
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="one column">
+    
+        <div class="one-half column">
+          <svg width="100%" height="100%">
+          </svg>
+        </div>
+    
+        <div>
           <h3>Barême</h3>
           <table>
             <thead>
               <tr>
-                <th>De</th>
-                <th>À</th>
+                <th>Seuil</th>
                 <th>Taux</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody> <!--
               <tr>
-                <td>0</td>
                 <td>10064</td>
                 <td>0%</td>
               </tr>
               <tr>
-                <td>10064</td>
                 <td>25659</td>
                 <td>11%</td>
               </tr>
               <tr>
-                <td>25659</td>
                 <td>73369</td>
                 <td>30%</td>
               </tr>
               <tr>
-                <td>73369</td>
                 <td>157806</td>
                 <td>41%</td>
               </tr>
               <tr>
-                <td>157806</td>
-                <td>999999999</td>
+                <td>∞</td>
                 <td>45%</td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
-          <input id="sum" class="u-full-width"/>
-          <div id="result" onchange="update()"></div>
+          <input id="sum" class="u-full-width" type="number" onchange="update()">
+          <div id="result"></div>
         </div>
-      </div>
-    </div>
+    
   </body>
   <script>
-    let input = document.querySelectorAll('#sum')
-    let output = document.querySelectorAll('#result')
+    // GRAPHICS SETUP
+    let svg = document.querySelector('svg')
+    rect = document.createElementNS("http://www.w3.org/2000/svg", 'rect')
+    rect.style.stroke = "#000"
+    rect.setAttribute('x', 100)
+    rect.setAttribute('y', 100)
+    rect.setAttribute('width', 100)
+    rect.setAttribute('width', 100)
+    svg.appendChild(rect)
+    // TEXT SETUP
+    let table = document.querySelector('tbody')
+    brackets.forEach( e => {
+      let tresh = document.createElement('td')
+      tresh.innerHTML = e[1]
+      let rate = document.createElement('td')
+      rate.innerHTML = e[2]
+      let row = document.createElement('tr')
+      row.appendChild(tresh, rate)
+      table.appendChild(row)
+    })
+    // TEXT UPDATE
+    let input = document.querySelector('#sum')
+    let output = document.querySelector('#result')
     let update = function() {
       let s = +input.value
       let r = tax(s)
@@ -73,6 +96,6 @@
       let text = `${r.reduce((a, b) => a + (b[3] || 0), 0)}`
       div.innerHTML = text
       output.appendChild(div)
-    }
+    }    
   </script>
 </html>
