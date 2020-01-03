@@ -54,10 +54,19 @@
   </body>
   <script>
     let input = document.querySelectorAll('#sum')
+    let output = document.querySelectorAll('#result')
     let update = function() {
       let s = +input.value
-      let r = imposition(s)
+      let r = tax(s)
       console.log(r)
+      r.forEach( line => {
+        let div = document.createElement('div')
+        let text = `Tranche ${line[0]+1}: `
+        output.appendchild()
+      })
+      let div = document.createElement('div')
+      let text = `${r.reduce((a, b) => a + (b[3] || 0), 0)}`
+      div.innerHTML = text
     }
   </script>
 </html>
