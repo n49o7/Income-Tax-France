@@ -1,4 +1,4 @@
-let bareme = [
+let brackets = [
   [0, 10064, 0],
   [10064, 25659, 11],
   [25659, 73369, 30],
@@ -6,21 +6,21 @@ let bareme = [
   [157806, 999999999, 45]
 ]
 
-let imposition = function(sum) {
-  let resultat = []
-	bareme.forEach( tranche => {
-    let part = intersect(sum, tranche)
-    let montant = part * tranche[2] / 100
-    imp.push([
-      bar.indexOf(tranche),
+let tax = function(sum) {
+  let result = []
+	brackets.forEach( e => {
+    let part = intersect(sum, e)
+	  let tax = part * e[2] / 100
+    result.push([
+      brackets.indexOf(e),
       part,
-      tranche[2],
-      montant
+      e[2],
+      tax
     ])
   })
   return resultat
 }
 
 let intersect = function(sum, interval) {
-    return Math.min(Math.max(sum - interval[0], 0), interval[1])
+  return Math.min(Math.max(sum - interval[0], 0), interval[1])
 }
