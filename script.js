@@ -1,26 +1,24 @@
 let bareme = [
   [0, 10064, 0],
-	[10064, 25659, 11],
-	[25659, 73369, 30],
-	[73369, 157806, 41],
-	[157806, 999999999, 45]
+  [10064, 25659, 11],
+  [25659, 73369, 30],
+  [73369, 157806, 41],
+  [157806, 999999999, 45]
 ]
 
 let imposition = function(sum) {
-  let imp = []
-	bareme.forEach( e => {
-    let part = intersect(sum, e)
-    let pre = part * e[2] / 100
+  let resultat = []
+	bareme.forEach( tranche => {
+    let part = intersect(sum, tranche)
+    let montant = part * tranche[2] / 100
     imp.push([
-      bar.indexOf(e),
+      bar.indexOf(tranche),
       part,
-      e[2],
-      pre
+      tranche[2],
+      montant
     ])
   })
-  imp.forEach( t => {
-    console.log(t)
-  })
+  return resultat
 }
 
 let intersect = function(sum, interval) {
