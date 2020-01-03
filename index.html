@@ -23,15 +23,17 @@
     .icon a:hover {
       text-shadow: 1px 1px 3px #888
     }
+    td {
+      padding: 4px 5px;
+    }
+    input[type='number'] {
+      height:  auto;
+      font-size: 2em
+    }
   </style>
-  <body style="display: flex; justify-content: center">
+  <body style="display: flex; flex-direction: row-reverse; justify-content: center">
     
-    <div id="graphics" class="one-half column">
-      <svg width="100%" height="100%">
-      </svg>
-    </div>
-
-    <div class="">
+    <div style="flex-shrink: 0; min-width: 295px; margin: 1rem 1rem 1rem 2.4rem">
       <h5>Barême</h5>
       <table id="bracketsTable" class="u-full-width">
         <thead>
@@ -47,26 +49,32 @@
       <input id="sum"
              class="u-full-width"
              type="number"
-             value="12000"
              step="100"
              min="0"
              onchange="update()"
       >
-      <h5>Imposition</h5>
-      <table id="taxTable" class="u-full-width">
-        <tbody>
-          <tr></tr>
-          <tr></tr>
-          <tr></tr>
-          <tr></tr>
-          <tr></tr>
-        </tbody>
-      </table>
-      <div style="display: flex; justify-content: space-between">
-        <div id="result"><i>Entrez une somme...</i></div>
-        <div class="icon"><a href="/impots/chart.html">&#128200;</a></div>
-        <!-- <div class="icon"><a href="/chart.html">&#128065;</a></div> -->
+      <div>
+        <h5>Imposition</h5>
+        <table id="taxTable" class="u-full-width">
+          <tbody>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+          </tbody>
+        </table>
+        <div style="display: flex; justify-content: space-between">
+          <div id="result"><i>Entrez une somme...</i></div>
+          <div class="icon"><a href="/impots/chart.html">&#128200;</a></div>
+          <!-- <div class="icon"><a href="/chart.html">&#128065;</a></div> -->
+        </div>
       </div>
+    </div>
+
+    <div id="graphics" style="opacity: 0.01; transition:opacity 0.200s linear; width: 20rem; margin: 1rem">
+      <svg width="100%" height="100%">
+      </svg>
     </div>
 
   </body>
@@ -84,6 +92,7 @@
     }
     // GRAPHICS UPDATE
     let updateGraphics = function() {
+      graphics.style.opacity = 1
       svg.innerHTML = ''
       let width = 100
       let maxWidth = svg.width.baseVal.value
@@ -148,12 +157,15 @@
       r.forEach( line => {
         let bracket = document.createElement('td')
         bracket.innerHTML = line[0] + 1
+        let part = document.createElement('td')
+        part.innerHTML = `${f(line[1])} €`
         let rate = document.createElement('td')
-        rate.innerHTML = `${f(line[1])} € x ${line[2]} %`
+        rate.innerHTML = `x ${line[2]} %`
         let tax = document.createElement('td')
-        tax.innerHTML = f(line[3]) + '€'
+        tax.innerHTML = `= ${f(line[3])} €`
         let row = document.createElement('tr')
         row.appendChild(bracket)
+        row.appendChild(part)
         row.appendChild(rate)
         row.appendChild(tax)
         taxTable.appendChild(row)
@@ -173,15 +185,20 @@
       output.appendChild(div)
     }
     // 
-    input.setAttribute('max', brackets[4][1])
+    let absoluteMax = brackets[4][1]
+    input.setAttribute('max', absoluteMax)
     let s = +input.value
     let r = tax(s)
     let update = function(){
+      if (+input.value > absoluteMax) {
+        input.value = absoluteMax
+      }
       s = +input.value
       r = tax(s)
       updateText()
       updateGraphics()
     }
-    update()
+    // input.value = 30000
+    updateText()
   </script>
 </html>
