@@ -62,11 +62,13 @@
       r.forEach( line => {
         let div = document.createElement('div')
         let text = `Tranche ${line[0]+1}: `
-        output.appendchild()
+        div.innerHTML = text
+        output.appendchild(div)
       })
       let div = document.createElement('div')
       let text = `${r.reduce((a, b) => a + (b[3] || 0), 0)}`
       div.innerHTML = text
+      output.appendChild(div)
     }
   </script>
 </html>
