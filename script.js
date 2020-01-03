@@ -24,3 +24,8 @@ let tax = function(sum) {
 let intersect = function(sum, interval) {
   return Math.min(Math.max(sum - interval[0], 0), interval[1])
 }
+
+let taxSum = function(sum) {
+  let results = tax(sum)
+  return results.reduce((a, b) => a + (b[3] || 0), 0)
+}

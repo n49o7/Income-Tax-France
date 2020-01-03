@@ -10,12 +10,21 @@
     <script src="script.js"></script>
   </head>
   <style>
-    body {
-      display: flex;
-      justify-content: center
+    .icon {
+      display:  flex;
+      align-items: center;
+      font-size: 3.2rem
+    }
+    .icon a {
+      text-decoration: none;
+      line-height: 3.2rem;
+      text-shadow: 1px 1px 3px #aaa
+    }
+    .icon a:hover {
+      text-shadow: 1px 1px 3px #888
     }
   </style>
-  <body>
+  <body style="display: flex; justify-content: center">
     
     <div id="graphics" class="one-half column">
       <svg width="100%" height="100%">
@@ -35,7 +44,14 @@
         </tbody>
       </table>
       <h5>Montant</h5>
-      <input id="sum" class="u-full-width" type="number" step="100" onchange="update()">
+      <input id="sum"
+             class="u-full-width"
+             type="number"
+             value="12000"
+             step="100"
+             min="0"
+             onchange="update()"
+      >
       <h5>Imposition</h5>
       <table id="taxTable" class="u-full-width">
         <tbody>
@@ -46,7 +62,11 @@
           <tr></tr>
         </tbody>
       </table>
-      <div id="result"><i>Entrez une somme...</i></div>
+      <div style="display: flex; justify-content: space-between">
+        <div id="result"><i>Entrez une somme...</i></div>
+        <div class="icon"><a href="/chart.html">&#128200;</a></div>
+        <!-- <div class="icon"><a href="/chart.html">&#128065;</a></div> -->
+      </div>
     </div>
 
   </body>
@@ -146,12 +166,14 @@
       //   output.appendChild(div)
       // })
       let total = r.reduce((a, b) => a + (b[3] || 0), 0)
+      let final = +input.value == 0 ? 0 : (total / +input.value * 100).toFixed(1)
       let div = document.createElement('div')
-      let text = `Total: <b>${f(total)} €</b><br/>Restant: ${f(s-total)} €`
+      let text = `Total: <b>${f(total)} €</b> (${final}%)<br/>Restant: ${f(s-total)} € (${100-final}%)`
       div.innerHTML = text
       output.appendChild(div)
     }
     // 
+    input.setAttribute('max', brackets[4][1])
     let s = +input.value
     let r = tax(s)
     let update = function(){

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Impôt par tranches</title>
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY="
+    crossorigin="anonymous" />
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  </head>
+  <style>
+  </style>
+  <body style="padding: 3.2rem">
+    <div style="position: absolute; z-index: 99"><a href='/index.html'>Back</a></div>
+    <div id="chart" style="min-height: 100vw"></div>
+  </body>
+  <script>
+    let input, total, final
+    input = new Array(4000).fill(undefined).map((_, i) => i * 100)
+    total = input.map((_, i) => taxSum(input[i]).toFixed(2))
+    final = total.map((_, i) => input[i] == 0 ? 0 : (100*total[i]/input[i]).toFixed(2))
+    // let ticks = input.map((val, index) => val % 1000 == 0 ? val : undefined)
+    let revenu = input.map((value, _) => value + ' €')
+    var options = {
+      chart: {
+        type: 'line',
+        zoom: {
+          // enabled: true
+        }
+      },
+      title: {
+        text: '',
+        align: 'top',
+        margin: 40
+      },
+      theme: {
+        mode: 'light',
+        palette: 'palette8'
+      },
+      tooltip: {
+        // enabled: false
+        x: {
+          show: true,
+          formatter: function(i) {
+            return revenu[i]
+          }
+        },
+        marker: {
+            show: false,
+        },
+        fixed: {
+            enabled: true,
+            position: 'bottomRight',
+            offsetX: 0,
+            offsetY: 0,
+        },
+      },
+      legend: {
+        show: false
+      },
+      series: [
+        {name: 'total', data: total},
+        {name: 'taux final', data: final}
+      ],
+      yaxis: [
+        {
+          axisBorder: {
+            show: true
+          }
+        },
+        {
+          opposite: true,
+          axisBorder: {
+            show: true
+          }
+        }
+      ],
+      xaxis: {
+        labels: {
+          formatter: function() {
+            return ''
+          }
+        },
+        categories: input
+      }
+    }
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+  </script>
+</html>
