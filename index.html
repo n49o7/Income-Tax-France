@@ -17,32 +17,40 @@
   </style>
   <body>
     
-        <div id="graphics" class="one-half column">
-          <svg width="100%" height="100%">
-          </svg>
-        </div>
-    
-        <div class="one-half column">
-          <h5>Barême</h5>
-          <tableu class="u-full-width">
-            <thead>
-              <tr>
-                <th>Seuil</th>
-                <th>Taux</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-          <h5>Montant</h5>
-          <input id="sum" class="u-full-width" type="number" onchange="update()">
-          <h5>Imposition</h5>
-          <div id="result"><i>Entrez une somme...</i></div>
-        </div>
-    
+    <div id="graphics" class="one-half column">
+      <svg width="100%" height="100%">
+      </svg>
+    </div>
+
+    <div class="">
+      <h5>Barême</h5>
+      <table id="bracketsTable" class="u-full-width">
+        <thead>
+          <tr>
+            <th>Seuil</th>
+            <th>Taux</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <h5>Montant</h5>
+      <input id="sum" class="u-full-width" type="number" step="100" onchange="update()">
+      <h5>Imposition</h5>
+      <table id="taxTable" class="u-full-width">
+        <tbody>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+        </tbody>
+      </table>
+      <div id="result"><i>Entrez une somme...</i></div>
+    </div>
+
   </body>
   <script>
-    let update = function(){updateText(); updateGraphics();}
     // GRAPHICS SETUP
     let graphics = document.querySelector('#graphics')
     let svg = document.querySelector('svg')
@@ -56,58 +64,102 @@
     }
     // GRAPHICS UPDATE
     let updateGraphics = function() {
+      svg.innerHTML = ''
       let width = 100
       let maxWidth = svg.width.baseVal.value
       let maxHeight = svg.height.baseVal.value
-      let scale = maxHeight / +input.value
+      let top = Math.max(brackets[0][1], +input.value) * 1.1
+      let scale = maxHeight / top
       brackets.forEach( e => {
+        let size = (e[1] - e[0]) * scale
+        let height = maxHeight - size - e[0] * scale
         symbol = rect(
-          maxWidth/2 - width,
-          0,
+          maxWidth/2 - width - width/20,
+          height,
           width,
-          e[1] * scale
+          size
         )
+        // symbol.setAttribute("stroke", "#000")
+        symbol.setAttribute("fill", `hsl(0, 0%, ${96-e[2]}%)`)
         svg.appendChild(symbol)
       })
-      let dim = +input.value
-      symbol = rect
-      symbol.style.stroke = "#000"
-      symbol.setAttribute('x', dim)
-      symbol.setAttribute('y', dim)
-      symbol.setAttribute('width', 100)
-      symbol.setAttribute('height', 100)
+      symbol = rect(
+        maxWidth/2 + width/20,
+        maxHeight - +input.value * scale,
+        width,
+        maxHeight
+      )
+      symbol.setAttribute("fill", `hsl(80, 70%, 70%)`)
       svg.appendChild(symbol)
+      brackets.forEach( e => {
+        let tax = r[brackets.indexOf(e)][3]
+        let size = tax * scale
+        let height = maxHeight - Math.min(+input.value, e[1]) * scale
+        symbol = rect(
+          maxWidth/2 + width/20,
+          height,
+          width,
+          size
+        )
+        // symbol.setAttribute("stroke", "#000")
+        symbol.setAttribute("fill", 'hsl(0, 70%, 70%)')
+        svg.appendChild(symbol)
+      })
     }
     // TEXT SETUP
-    let table = document.querySelector('tbody')
+    let f = function(string) { return string.toLocaleString('fr-FR') }
+    let bracketsTable = document.querySelector('#bracketsTable > tbody')
     brackets.forEach( e => {
       let tresh = document.createElement('td')
-      tresh.innerHTML = e[1].toLocaleString('fr-FR')
+      tresh.innerHTML = f(e[1])
       let rate = document.createElement('td')
       rate.innerHTML = `${e[2]} %`
       let row = document.createElement('tr')
       row.appendChild(tresh)
       row.appendChild(rate)
-      table.appendChild(row)
+      bracketsTable.appendChild(row)
     })
     // TEXT UPDATE
     let input = document.querySelector('#sum')
     let output = document.querySelector('#result')
+    let taxTable = document.querySelector('#taxTable > tbody')
     let updateText = function() {
-      let s = +input.value
-      let r = tax(s)
-      output.innerHTML = ''
+      taxTable.innerHTML = ''
       r.forEach( line => {
-        let div = document.createElement('div')
-        let text = `Tranche ${line[0]+1}: ${line[1]} x ${line[2]}% = ${line[3]} €`
-        div.innerHTML = text
-        output.appendChild(div)
+        let bracket = document.createElement('td')
+        bracket.innerHTML = line[0] + 1
+        let rate = document.createElement('td')
+        rate.innerHTML = `${f(line[1])} € x ${line[2]} %`
+        let tax = document.createElement('td')
+        tax.innerHTML = f(line[3]) + '€'
+        let row = document.createElement('tr')
+        row.appendChild(bracket)
+        row.appendChild(rate)
+        row.appendChild(tax)
+        taxTable.appendChild(row)
       })
+      output.innerHTML = ''
+      // r.forEach( line => {
+      //   let div = document.createElement('div')
+      //   let text = `Tranche ${line[0]+1}: ${line[1]} € x ${line[2]} % = ${line[3]} €`
+      //   div.innerHTML = text
+      //   output.appendChild(div)
+      // })
       let total = r.reduce((a, b) => a + (b[3] || 0), 0)
       let div = document.createElement('div')
-      let text = `Total: <b>${total}</b><br/>Restant: ${s-total}`
+      let text = `Total: <b>${f(total)} €</b><br/>Restant: ${f(s-total)} €`
       div.innerHTML = text
       output.appendChild(div)
-    }    
+    }
+    // 
+    let s = +input.value
+    let r = tax(s)
+    let update = function(){
+      s = +input.value
+      r = tax(s)
+      updateText()
+      updateGraphics()
+    }
+    update()
   </script>
 </html>
