@@ -3,21 +3,61 @@
   <head>
     <meta charset="utf-8">
     <title>Impôt par tranches</title>
-	<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-      integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY="
-      crossorigin="anonymous" />
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY="
+    crossorigin="anonymous" />
     <script src="script.js"></script>
   </head>
   <body>
-    <h2>Barême</h2>
-    <input id="somme"/>
-    <div id="resultat"></div>
+    <div class="container">
+      <h2>Barême</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>De</th>
+            <th>À</th>
+            <th>Taux</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input value="0"/></td>
+            <td><input value="10064"/></td>
+            <td><input value="0"/></td>
+          </tr>
+          <tr>
+            <td><input value="10064"/></td>
+            <td><input value="25659"/></td>
+            <td><input value="11"/></td>
+          </tr>
+          <tr>
+            <td><input value="25659"/></td>
+            <td><input value="73369"/></td>
+            <td><input value="30"/></td>
+          </tr>
+          <tr>
+            <td><input value="73369"/></td>
+            <td><input value="157806"/></td>
+            <td><input value="41"/></td>
+          </tr>
+          <tr>
+            <td><input value="157806"/></td>
+            <td><input value="999999999"/></td>
+            <td><input value="45"/></td>
+          </tr>
+        </tbody>
+      </table>
+      <input id="somme"/>
+      <div id="resultat"></div>
+    </div>
   </body>
   <script>
-   document.querySelector('#somme').addEventListener('onchange', function(this) {
-   	let s = this.value
-   	let r = imposition(s)
-    console.log(r)
-   })
+    document.querySelectorAll('input').addEventListener('onchange', function(this) {
+      console.log(this)
+      //let s = this.value
+      //let r = imposition(s)
+      //console.log(r)
+    })
+  </script>
 </html>
