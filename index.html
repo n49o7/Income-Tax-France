@@ -22,7 +22,7 @@
           </svg>
         </div>
     
-        <div>
+        <div class="one-half column">
           <h5>Barême</h5>
           <div class="container">
             <table>
@@ -32,27 +32,7 @@
                   <th>Taux</th>
                 </tr>
               </thead>
-              <tbody> <!--
-                <tr>
-                  <td>10064</td>
-                  <td>0%</td>
-                </tr>
-                <tr>
-                  <td>25659</td>
-                  <td>11%</td>
-                </tr>
-                <tr>
-                  <td>73369</td>
-                  <td>30%</td>
-                </tr>
-                <tr>
-                  <td>157806</td>
-                  <td>41%</td>
-                </tr>
-                <tr>
-                  <td>∞</td>
-                  <td>45%</td>
-                </tr> -->
+              <tbody>
               </tbody>
             </table>
           </div>
@@ -87,9 +67,9 @@
     let table = document.querySelector('tbody')
     brackets.forEach( e => {
       let tresh = document.createElement('td')
-      tresh.innerHTML = e[1]
+      tresh.innerHTML = e[1].toLocaleString('fr-FR')
       let rate = document.createElement('td')
-      rate.innerHTML = e[2]
+      rate.innerHTML = `${e[2]} %`
       let row = document.createElement('tr')
       row.appendChild(tresh)
       row.appendChild(rate)
@@ -101,16 +81,15 @@
     let updateText = function() {
       let s = +input.value
       let r = tax(s)
+      output.innerHTML = ''
       r.forEach( line => {
         let div = document.createElement('div')
         let text = `Tranche ${line[0]+1}: ${line[1]} x ${line[2]}% = ${line[3]}`
         div.innerHTML = text
-        console.log(div)
-        output.appendchild(div)
+        output.appendChild(div)
       })
       let div = document.createElement('div')
       let text = `${r.reduce((a, b) => a + (b[3] || 0), 0)}`
-      console.log(text)
       div.innerHTML = text
       output.appendChild(div)
     }    
