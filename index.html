@@ -24,18 +24,16 @@
     
         <div class="one-half column">
           <h5>Barême</h5>
-          <div class="container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Seuil</th>
-                  <th>Taux</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
+          <tableu class="u-full-width">
+            <thead>
+              <tr>
+                <th>Seuil</th>
+                <th>Taux</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
           <h5>Montant</h5>
           <input id="sum" class="u-full-width" type="number" onchange="update()">
           <h5>Imposition</h5>
@@ -48,12 +46,29 @@
     // GRAPHICS SETUP
     let graphics = document.querySelector('#graphics')
     let svg = document.querySelector('svg')
-    let rect = document.createElementNS("http://www.w3.org/2000/svg", 'rect')
+    let rect = function(x, y, width, height) {
+      let symbol = document.createElementNS("http://www.w3.org/2000/svg", 'rect')
+      symbol.setAttribute('x', x)
+      symbol.setAttribute('y', y)
+      symbol.setAttribute('width', width)
+      symbol.setAttribute('height', height)
+      return symbol
+    }
     // GRAPHICS UPDATE
     let updateGraphics = function() {
-      console.log(
-        svg.width.baseVal.value
-      )
+      let width = 100
+      let maxWidth = svg.width.baseVal.value
+      let maxHeight = svg.height.baseVal.value
+      let scale = maxHeight / +input.value
+      brackets.forEach( e => {
+        symbol = rect(
+          maxWidth/2 - width,
+          0,
+          width,
+          e[1] * scale
+        )
+        svg.appendChild(symbol)
+      })
       let dim = +input.value
       symbol = rect
       symbol.style.stroke = "#000"
@@ -84,12 +99,13 @@
       output.innerHTML = ''
       r.forEach( line => {
         let div = document.createElement('div')
-        let text = `Tranche ${line[0]+1}: ${line[1]} x ${line[2]}% = ${line[3]}`
+        let text = `Tranche ${line[0]+1}: ${line[1]} x ${line[2]}% = ${line[3]} €`
         div.innerHTML = text
         output.appendChild(div)
       })
+      let total = r.reduce((a, b) => a + (b[3] || 0), 0)
       let div = document.createElement('div')
-      let text = `${r.reduce((a, b) => a + (b[3] || 0), 0)}`
+      let text = `Total: <b>${total}</b><br/>Restant: ${s-total}`
       div.innerHTML = text
       output.appendChild(div)
     }    
