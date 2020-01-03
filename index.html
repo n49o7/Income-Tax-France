@@ -23,40 +23,42 @@
         </div>
     
         <div>
-          <h4>Barême</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>Seuil</th>
-                <th>Taux</th>
-              </tr>
-            </thead>
-            <tbody> <!--
-              <tr>
-                <td>10064</td>
-                <td>0%</td>
-              </tr>
-              <tr>
-                <td>25659</td>
-                <td>11%</td>
-              </tr>
-              <tr>
-                <td>73369</td>
-                <td>30%</td>
-              </tr>
-              <tr>
-                <td>157806</td>
-                <td>41%</td>
-              </tr>
-              <tr>
-                <td>∞</td>
-                <td>45%</td>
-              </tr> -->
-            </tbody>
-          </table>
-          <h4>Montant</h4>
+          <h5>Barême</h5>
+          <div class="container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Seuil</th>
+                  <th>Taux</th>
+                </tr>
+              </thead>
+              <tbody> <!--
+                <tr>
+                  <td>10064</td>
+                  <td>0%</td>
+                </tr>
+                <tr>
+                  <td>25659</td>
+                  <td>11%</td>
+                </tr>
+                <tr>
+                  <td>73369</td>
+                  <td>30%</td>
+                </tr>
+                <tr>
+                  <td>157806</td>
+                  <td>41%</td>
+                </tr>
+                <tr>
+                  <td>∞</td>
+                  <td>45%</td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+          <h5>Montant</h5>
           <input id="sum" class="u-full-width" type="number" onchange="update()">
-          <h4>Montant</h4>
+          <h5>Imposition</h5>
           <div id="result"><i>Entrez une somme...</i></div>
         </div>
     
@@ -102,8 +104,8 @@
       r.forEach( line => {
         let div = document.createElement('div')
         let text = `Tranche ${line[0]+1}: ${line[1]} x ${line[2]}% = ${line[3]}`
-        console.log(text)
         div.innerHTML = text
+        console.log(div)
         output.appendchild(div)
       })
       let div = document.createElement('div')
