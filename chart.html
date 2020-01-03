@@ -18,7 +18,7 @@
   </body>
   <script>
     let input, total, final
-    input = new Array(4000).fill(undefined).map((_, i) => i * 100)
+    input = new Array(800).fill(undefined).map((_, i) => i * 500)
     total = input.map((_, i) => taxSum(input[i]).toFixed(2))
     final = total.map((_, i) => input[i] == 0 ? 0 : (100*total[i]/input[i]).toFixed(2))
     // let ticks = input.map((val, index) => val % 1000 == 0 ? val : undefined)
@@ -26,6 +26,9 @@
     var options = {
       chart: {
         type: 'line',
+        animations: {
+          enabled: false,
+        },
         zoom: {
           // enabled: true
         }
@@ -68,13 +71,19 @@
         {
           axisBorder: {
             show: true
-          }
+          },
+          tickAmount: 4,
+          min: 0,
+          max: 200000
         },
         {
           opposite: true,
           axisBorder: {
             show: true
-          }
+          },
+          tickAmount: 6,
+          min: 0,
+          max: 60
         }
       ],
       xaxis: {
