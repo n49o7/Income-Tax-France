@@ -11,45 +11,49 @@
   </head>
   <body>
     <div class="container">
-      <h3>Barême</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>De</th>
-            <th>À</th>
-            <th>Taux</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>0</td>
-            <td>10064</td>
-            <td>0%</td>
-          </tr>
-          <tr>
-            <td>10064</td>
-            <td>25659</td>
-            <td>11%</td>
-          </tr>
-          <tr>
-            <td>25659</td>
-            <td>73369</td>
-            <td>30%</td>
-          </tr>
-          <tr>
-            <td>73369</td>
-            <td>157806</td>
-            <td>41%</td>
-          </tr>
-          <tr>
-            <td>157806</td>
-            <td>999999999</td>
-            <td>45%</td>
-          </tr>
-        </tbody>
-      </table>
-      <input id="sum"/>
-      <div id="result" class="u-full-width" onchange="update()"></div>
+      <div class="row">
+        <div class="one column">
+          <h3>Barême</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>De</th>
+                <th>À</th>
+                <th>Taux</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>10064</td>
+                <td>0%</td>
+              </tr>
+              <tr>
+                <td>10064</td>
+                <td>25659</td>
+                <td>11%</td>
+              </tr>
+              <tr>
+                <td>25659</td>
+                <td>73369</td>
+                <td>30%</td>
+              </tr>
+              <tr>
+                <td>73369</td>
+                <td>157806</td>
+                <td>41%</td>
+              </tr>
+              <tr>
+                <td>157806</td>
+                <td>999999999</td>
+                <td>45%</td>
+              </tr>
+            </tbody>
+          </table>
+          <input id="sum" class="u-full-width"/>
+          <div id="result" onchange="update()"></div>
+        </div>
+      </div>
     </div>
   </body>
   <script>
@@ -61,7 +65,7 @@
       console.log(r)
       r.forEach( line => {
         let div = document.createElement('div')
-        let text = `Tranche ${line[0]+1}: `
+        let text = `Tranche ${line[0]+1}: ${line[1]} x ${line[2]}% = ${line[3]}`
         div.innerHTML = text
         output.appendchild(div)
       })
