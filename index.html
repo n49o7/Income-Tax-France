@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Impôt par tranches</title>
+	<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+      integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY="
+      crossorigin="anonymous" />
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h2>Barême</h2>
+    <input id="somme"/>
+    <div id="resultat"></div>
+  </body>
+  <script>
+   document.querySelector('#somme').addEventListener('onchange', function(this) {
+   	let s = this.value
+   	let r = imposition(s)
+    console.log(r)
+   })
+</html>
