@@ -18,7 +18,7 @@ let tax = function(sum) {
       tax
     ])
   })
-  return resultat
+  return result
 }
 
 let intersect = function(sum, interval) {
